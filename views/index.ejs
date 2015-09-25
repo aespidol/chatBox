@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Number Game</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type ="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type ="text/javascript">
+        var name = prompt("Enter your name for the chat:");
+    	$(document).ready(function(){
+    		var socket = io.connect();
+            $("button").click(function(){
+                var message = $("#message").val();
+                $("#message").val("");
+                socket.emit("chat", {name: name ,message: message});
+            })
+            socket.on("update", function(data){
+                console.log(data.log);
+                for(x in data.log){
+                    var app = "<li>data.log[x]</li>";
+                $("ul").append("<li>"+data.log[x]+"</li>");
+                }
+            })
+            socket.on("start", function(data){
+                for(x in data.log){
+
+                    $("ul").append("<li>"+data.log[x]+"</li>");
+                }
+            })
+    	})
+    </script>
+    <style type="text/css">
+    .chat{
+        width: 600px;
+        height: 100px;
+        overflow: scroll;
+        border-style: solid;
+        border-width: 1px;
+    }
+    ul {
+        list-style-type: none;
+    }
+    </style>
+</head>
+<body>
+<h1>Conversation Board</h1>
+<div class="chat">
+<ul>
+</ul>
+</div>
+<textarea id="message" name="message"></textarea>
+<button>Submit</button>
+</body>
+</html>

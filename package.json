@@ -1,0 +1,8 @@
+{
+  "name": "Number_Game",
+  "description": "Increment number when the button is pushed.",
+  "dependencies": {
+    "ejs": "^2.3.3",
+    "express": "^4.13.3"
+  }
+}
